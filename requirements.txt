@@ -1,7 +1,4 @@
-certifi==2020.6.20
-wincertstore==0.2
 
-requests~=2.24.0
 pip~=20.1.1
 wheel~=0.34.2
 cryptography~=2.9.2
@@ -12,3 +9,6 @@ setuptools~=49.2.0
 cython~=0.29.21
 # zlib~=1.2.11
 # openssl~=1.1.1g
+zlib~=1.2.11
+openssl~=1.1.1g
+pyTelegramBotAPI~=3.7.3

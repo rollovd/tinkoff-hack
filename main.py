@@ -6,13 +6,6 @@ from Processing import Processing
 process = Processing()
 bot = telebot.TeleBot(config.TOKEN)
 
-# @bot.message_handler(commands=['photo'])
-# def send_photo(message):
-#     bot.send_chat_action(message.chat.id, 'upload_photo')
-#     img = open('O.jpg', 'rb')
-#     bot.send_photo(message.chat.id, img, reply_to_message_id=message.message_id)
-#     img.close()
-
 @bot.message_handler(commands=['start'])
 def welcome(message):
     markup = telebot.types.InlineKeyboardMarkup(row_width=2)
@@ -21,7 +14,7 @@ def welcome(message):
 
     markup.add(item1, item2)
 
-    img = open('oleggo.jpg', 'rb')
+    img = open('images\oleggo.jpg', 'rb')
     bot.send_photo(message.chat.id, img,
                    # reply_to_message_id=message.message_id
                    )

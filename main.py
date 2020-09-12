@@ -1,10 +1,12 @@
 import telebot
 import config
+import random
 from dictionary_answer import dictionary_answer
 from Processing import Processing
 
 process = Processing()
 bot = telebot.TeleBot(config.TOKEN)
+seed = random.randint(1, 50000)
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
@@ -15,14 +17,11 @@ def welcome(message):
     markup.add(item1, item2)
 
     img = open('images\oleggo.jpg', 'rb')
-    bot.send_photo(message.chat.id, img,
-                   # reply_to_message_id=message.message_id
-                   )
+    bot.send_photo(message.chat.id, img)
 
     bot.send_message(message.chat.id, f'Привет, <b>{message.from_user.first_name}</b>, меня зовут бот <b>Олег</b>! *Текст*.\nХочешь поиграть в игру? 🤠',
                      reply_markup=markup,
                      parse_mode='html')
-
 
 @bot.message_handler(content_types=['text'])
 def send_message(message):
@@ -39,6 +38,7 @@ def send_message(message):
             bot.send_message(message.chat.id, f'Что выберем, {message.from_user.first_name}?', reply_markup=markup)
 
         elif isinstance(message_text, tuple):
+            global lat, lon
             lat, lon = message_text
 
             markup = telebot.types.InlineKeyboardMarkup(row_width=2)
@@ -49,12 +49,19 @@ def send_message(message):
             bot.send_message(message.chat.id, f'Так-с, давай проверим:\nШирота = {lat}, Долгота = {lon}\nВсё верно?',
                              reply_markup=markup)
 
+        elif isinstance(message_text, str) and len(message_text) <= 3:
+            try:
+                store = store_dict[int(message_text)]
+                bot.send_message(message.chat.id, f'Пойдём скорей в {store}!')
+            except KeyError:
+                bot.send_message(message.chat.id, f'Дружок, я не вижу такой цифры... Попробуй ещё раз!😉')
+
+
 @bot.callback_query_handler(func=lambda cell: True)
 def callback_inline(call):
     try:
         if call.message:
             key = call.data
-            text = dictionary_answer[key]
 
             if key == 'game_yes':
                 markup = telebot.types.InlineKeyboardMarkup(row_width=4)
@@ -65,11 +72,20 @@ def callback_inline(call):
                 markup.add(item1, item2)
                 markup.add(item3)
 
+                text = dictionary_answer[key]
                 bot.send_message(call.message.chat.id,
                                  text,
                                  reply_markup=markup,
                                  parse_mode='html')
+
+            elif key == 'yes_catch_oleg':
+                global store_dict
+                find_stores_result = process.find_stores(seed)
+                store_dict = find_stores_result[1]
+                bot.send_message(call.message.chat.id, find_stores_result[0])
+
             else:
+                text = dictionary_answer[key]
                 bot.send_message(call.message.chat.id, text)
 
     except Exception as e:

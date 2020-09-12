@@ -1,18 +1,7 @@
 import telebot
 import config
-
-class Processing:
-
-    def __init__(self):
-        pass
-
-    @staticmethod
-    def coord_idenify(message):
-        try:
-            lat, lot = [float(x) for x in message.split(', ')]
-            return (lat, lot)
-        except ValueError:
-            return message
+from dictionary_answer import dictionary_answer
+from Processing import Processing
 
 process = Processing()
 bot = telebot.TeleBot(config.TOKEN)
@@ -58,7 +47,10 @@ def send_message(message):
 def callback_inline(call):
     try:
         if call.message:
-            if call.data == 'game_yes':
+            key = call.data
+            text = dictionary_answer[key]
+
+            if key == 'game_yes':
                 markup = telebot.types.InlineKeyboardMarkup(row_width=4)
                 item1 = telebot.types.InlineKeyboardButton('Поимка Олега! 🏃🏻', callback_data='catch_oleg')
                 item2 = telebot.types.InlineKeyboardButton('Показать Арены! 🤼', callback_data='show_arena')
@@ -68,68 +60,15 @@ def callback_inline(call):
                 markup.add(item3)
 
                 bot.send_message(call.message.chat.id,
-                                 'У нас есть <b>3</b> режима! Выбирай!',
+                                 text,
                                  reply_markup=markup,
                                  parse_mode='html')
-
-            elif call.data == 'game_no':
-                bot.send_message(call.message.chat.id,
-                                 'Тогда пока... 😥')
-
-            elif call.data == 'catch_oleg':
-                bot.send_message(call.message.chat.id, 'Отправь мне свои координаты <3.\nФормат: <Широта>, <Долгота>')
-
-            elif call.data == 'yes_catch_oleg':
-                bot.send_message(call.message.chat.id, 'Прекрасно, идём дальше!')
-
-            elif call.data == 'no_catch_oleg':
-                bot.send_message(call.message.chat.id, 'Так-с, введи координаты ещё раз.')
-
-            elif call.data == 'show_arena':
-                bot.send_message(call.message.chat.id, 'Итак, правила игры следующие: ')
-
-            elif call.data == 'show_bag':
-                bot.send_message(call.message.chat.id, 'Итак, правила игры следующие: ')
-
-
+            else:
+                bot.send_message(call.message.chat.id, text)
 
     except Exception as e:
         print(repr(e))
 
-
 if __name__ == "__main__":
     bot.polling(none_stop=True)
-
-# @bot.message_handler(commands=["start"])
-# def start_message(message):
-#     user_markup = telebot.types.ReplyKeyboardMarkup(True, False)
-#     user_markup.row("Курсы валют", "Новости")
-#     bot.send_message(message.chat.id, "Добрый день", reply_markup=user_markup)
-#
-# @bot.message_handler(regexp="Курсы валют")
-# def value_message(message):
-#     keyboardV = telebot.types.InlineKeyboardMarkup()
-#     kbv1 = telebot.types.InlineKeyboardButton(text="Доллар", callback_data="USD")
-#     kbv2 = telebot.types.InlineKeyboardButton(text="Евро", callback_data="EUR")
-#     kbv3 = telebot.types.InlineKeyboardButton(text="Фунт", callback_data="GBP")
-#     keyboardV.add(kbv1, kbv2, kbv3)
-#     bot.send_message(message.chat.id, "Выберите валюту: ", reply_markup=keyboardV)
-#
-#
-# @bot.message_handler(regexp="Новости")
-# def selectCounrty(message):
-#     # Клавиатура выбора стран
-#     keyboard = telebot.types.InlineKeyboardMarkup()
-#     kb1 = telebot.types.InlineKeyboardButton(text="Россия", callback_data="country1")
-#     kb2 = telebot.types.InlineKeyboardButton(text="Германия", callback_data="country2")
-#     keyboard.add(kb1, kb2)
-#     bot.send_message(message.chat.id, "Список стран: ", reply_markup=keyboard)
-#
-#
-#
-# @bot.callback_query_handler(func=lambda c:True)
-# def inline(callback):
-#     print(callback.data)
-#
-# bot.polling()
 

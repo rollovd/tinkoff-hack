@@ -1,12 +1,19 @@
-The bot <b>Tinkoff_OlegGO</b> is the mvp of the <b>"404 found"</b> team project 
-for the Tinkoff hackathon as part of the Hacklab course.
+## OlegGO
 
----
+This telegram bot is an MVP of a “404 found” team idea, created during hackathon at Skoltech.
 
-At the moment there are the following restrictions:
-* Bot is able to work with only one user simultaneously;
-* For each question in the test, 10 seconds are given, which in any case must be waited to receive the next question;
-* A number of methods are implemented only as a demonstration without functionality;
+## Supported functionality
+- Single user mode
+- Quizzes
+- Location tracking
+- Arenas (hardcoded demo)
+- Catching of Oleg (hardcoded demo)
 
+## Installation
 
+1. Clone the project `git clone https://github.com/rollovd/tinkoff-hack.git`
+2. (Optional, recommended) Create new environment (Anaconda / venv)
+3. Install all dependencies `pip install -r requierement.txt`
+4. Launch bot `python main.py`
+5. Bot is now alive, find **@Tinkoff_OlegGO**
 

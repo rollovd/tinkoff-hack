@@ -261,6 +261,11 @@ def callback_inline(call):
                 time.sleep(1.5)
                 bot.send_message(call.message.chat.id, 'Молодец, ты нашёл Олега! За это ты получаешь +1 к рейтингу и одну монету.')
 
+                img = open(r'images\tinkov.jpg', 'rb')
+                bot.send_photo(call.message.chat.id, img)
+
+                time.sleep(2)
+
                 text_fact = random.choice(Processing.facts)
                 bot.send_message(call.message.chat.id,
                                  f'Кстати, ты нашёл Олега в "Перекрёстке", где каждый клиент банка Тинькофф может получить {random.randint(3, 9)}% кешбэка на первую покупку от 1000 рублей.\n\n')

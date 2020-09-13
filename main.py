@@ -5,11 +5,13 @@ import geocoder
 import Processing
 import time
 import questions
+import os
 
 process = Processing.Processing()
 bot = telebot.TeleBot(config.TOKEN)
 
 leaderboard = {'Jamil': 20, 'Dima': 11, 'Maria': 15, 'Kirill': 5, 'lamoureux': 9}
+IMAGES = "images"
 
 saved_facts = []
 arenas = 3
@@ -30,7 +32,7 @@ quotes = [
 def start_command(message):
     global my_name
 
-    img = open('images\oleggo.jpg', 'rb')
+    img = open(os.path.join(IMAGES, 'oleggo.jpg'), 'rb')
     bot.send_photo(message.chat.id, img)
 
     my_name = message.from_user.first_name
@@ -238,7 +240,7 @@ def callback_inline(call):
                 bot.send_message(call.message.chat.id,
                                  f'Ищу ближайших Олегов...')
                 time.sleep(1.5)
-                img = open('images\oleges.png', 'rb')
+                img = open(os.path.join(IMAGES, 'oleges.png'), 'rb')
                 bot.send_photo(call.message.chat.id, img)
 
                 bot.send_message(call.message.chat.id, process.find_stores())
@@ -256,12 +258,12 @@ def callback_inline(call):
             elif callback_data == 'get_destination':
                 global text_fact
 
-                img = open(r'images\find_oleg.png', 'rb')
+                img = open(os.path.join(IMAGES, 'find_oleg.png'), 'rb')
                 bot.send_photo(call.message.chat.id, img)
                 time.sleep(1.5)
                 bot.send_message(call.message.chat.id, 'Молодец, ты нашёл Олега! За это ты получаешь +1 к рейтингу и одну монету.')
 
-                img = open(r'images\tinkov.jpg', 'rb')
+                img = open(os.path.join(IMAGES, 'tinkov.jpg') , 'rb')
                 bot.send_photo(call.message.chat.id, img)
 
                 time.sleep(2)
@@ -384,7 +386,7 @@ def send_message(message):
 
             _ = store_dict[int(message.text)]
 
-            img = open(f'images\oleg_{int(message.text)}.jpg', 'rb')
+            img = open(os.path.join(IMAGES, f'oleg_{int(message.text)}.jpg'), 'rb')
             bot.send_photo(message.chat.id, img)
 
             bot.send_message(message.chat.id, 'Помчали?', parse_mode='html',
@@ -400,6 +402,3 @@ if __name__ == "__main__":
 
     except Exception as e:
         time.sleep(5)
-
-
-

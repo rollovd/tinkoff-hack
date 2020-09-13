@@ -43,7 +43,7 @@ class Processing:
 
             result[index] = value
 
-        text += '\nНу что, куда пойдём? Введи номер!'
+        text += '\nНу что, куда пойдём? Введи номер с помощью клавиатуры! ⌨'
         return text, result
 
 

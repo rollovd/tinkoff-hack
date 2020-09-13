@@ -205,9 +205,13 @@ def callback_inline(call):
                     bot.send_message(call.message.chat.id, text, reply_markup=markup)
                     time.sleep(10)
 
+                if correct_quiz_answers >= 5:
+                    text_win = 'Поздравляю! Ты набрал больше баллов, чем твой оппонент. Арена по праву твоя! 🏆'
+                else:
+                    text_win = 'Ты был хорош, но твой оппонент оказался чуть сильнее. Не отчаивайся, лови Олегов и пополняй свой багаж знаний!'
+
                 bot.send_message(call.message.chat.id,
-                                 f'Ты ответил правильно на {correct_quiz_answers}/{len(training_dict)} вопросов.\n'
-                                 f'Возвращайся через час за новым тестом!', reply_markup=markup)
+                                 f'Ты ответил правильно на {correct_quiz_answers}/{len(training_dict)} вопросов.\n' + text_win, reply_markup=markup)
 
                 try:
                     leaderboard[my_name] += correct_quiz_answers

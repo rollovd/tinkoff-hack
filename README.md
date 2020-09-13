@@ -1,12 +1,12 @@
-Бот <b>Tinkoff_OlegGO</b> является mvp проекта команды <b>"404 found"</b>
-для хакатона от Tinkoff в рамках курса Hacklab.
+The bot <b>Tinkoff_OlegGO</b> is the mvp of the <b>"404 found"</b> team project 
+for the Tinkoff hackathon as part of the Hacklab course.
 
 ---
 
-На данный момент существуют следующие ограничения:
-* Бот может работать одновременно только с одним пользователем;
-* На каждый вопрос в тесте даётся 10 секунд, которые в любом случае необходимо подождать, чтобы получить следующий вопрос;
-* Ряд методов реализован только в качестве демонстрации без функционала;
+At the moment there are the following restrictions:
+* Bot is able to work with only one user simultaneously;
+* For each question in the test, 10 seconds are given, which in any case must be waited to receive the next question;
+* A number of methods are implemented only as a demonstration without functionality;
 
 
 
